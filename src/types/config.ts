@@ -4,5 +4,11 @@ export interface Config {
   database: 'mongodb' | 'mysql';
   docker: 'yes' | 'no';
   structure: 'basic' | 'advanced' | 'ultra';
-  apis?: string[];
+  apis: string[];
+  schemas: Record<string, Fields[]>;
+}
+
+export interface Fields {
+  name: string;
+  type: 'string' | 'number' | 'boolean' | 'date';
 }
