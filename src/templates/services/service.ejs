@@ -1,0 +1,71 @@
+<%
+const typeName = entity.charAt(0).toUpperCase() + entity.slice(1);
+const className = typeName + 'Service';
+const modelName = typeName + 's';
+%>
+
+<% if(type==='esm') { %>
+import { v4 as uuidv4 } from 'uuid';
+import { <%= modelName %> } from '../models/<%= entity %>';
+<% if(language==='typescript') { %>
+import { <%= typeName %>, <%= typeName %>Payload } from '../types/<%= entity %>';
+<% } %>
+<% } else { %>
+const { v4: uuidv4 } = require('uuid');
+const { <%= modelName %> } = require('../models/<%= entity %>');
+<% } %>
+
+class <%= className %> {
+  static async create(
+    payload<% if(language==='typescript') { %>: <%= typeName %>Payload<% } %>
+  )<% if(language==='typescript') { %>: Promise<string><% } %> {
+    const id = uuidv4();
+    await <%= modelName %>.insert(id, payload);
+    return id;
+  }
+
+  static async update(
+    id<% if(language==='typescript') { %>: string<% } %>,
+    payload<% if(language==='typescript') { %>: <%= typeName %>Payload<% } %>
+  )<% if(language==='typescript') { %>: Promise<string><% } %> {
+    const existing = await <%= modelName %>.get(id);
+    if (!existing) {
+      throw new Error('<%= typeName %> with provided id does not exist');
+    }
+
+    await <%= modelName %>.update(id, payload);
+    return id;
+  }
+
+  static async get(
+    id<% if(language==='typescript') { %>: string<% } %>
+  )<% if(language==='typescript') { %>: Promise<<%= typeName %>><% } %> {
+    const data = await <%= modelName %>.get(id);
+    if (!data) {
+      throw new Error('<%= typeName %> does not exist');
+    }
+    return data;
+  }
+
+  static async list()<% if(language==='typescript') { %>: Promise<<%= typeName %>[]><% } %> {
+    return <%= modelName %>.list();
+  }
+
+  static async delete(
+    id<% if(language==='typescript') { %>: string<% } %>
+  )<% if(language==='typescript') { %>: Promise<string><% } %> {
+    const existing = await <%= modelName %>.get(id);
+    if (!existing) {
+      throw new Error('<%= typeName %> does not exist');
+    }
+
+    await <%= modelName %>.delete(id);
+    return id;
+  }
+}
+
+<% if(type==='esm') { %>
+export { <%= className %> };
+<% } else { %>
+module.exports = { <%= className %> };
+<% } %>
