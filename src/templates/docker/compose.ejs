@@ -1,0 +1,64 @@
+services:
+  node-app:
+    build:
+      context: .
+      dockerfile: './containers/Dockerfile'
+    container_name: node-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+    env_file:
+      - ./.env
+    volumes:
+      - type: bind
+        source: './'
+        target: '/usr/src/app'
+        read_only: true
+
+  <% if (database === 'mysql') { %>
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: mysql
+    env_file:
+      - ./docker.env
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    ports:
+      - 3306:3306
+  <% } %>
+
+  <% if (database === 'mongodb') { %>
+  db:
+    image: mongo:latest
+    restart: always
+    container_name: mongodb
+    env_file:
+      - ./docker.env
+    volumes:
+      - db_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    ports:
+      - 27017:27017
+  <% } %>
+
+volumes:
+  db_data:
+
+networks:
+  default:
+    name: node-toolkit-network
+    driver: bridge
