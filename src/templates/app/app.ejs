@@ -1,31 +1,31 @@
-<% if (type === 'esm') { %>
+<%_ if (type === 'esm') { _%>
 import express from 'express';
-<% if (language === 'typescript') { %>
+<%_ if (language === 'typescript') { _%>
 import type { Request, Response } from 'express';
 import type { Server } from 'http';
-<% } %>
+<%_ } _%>
 import 'dotenv/config';
-<% if (logger === 'yes') { %>
+<%_ if (logger === 'yes') { _%>
 import logger from './utils/logger';
-<% } %>
+<%_ } _%>
 import { connectToDb } from './db/client';
 import router from './routes';
-<% } else { %>
+<%_ } else { _%>
 const express = require('express');
 require('dotenv/config');
-<% if (logger === 'yes') { %>
+<%_ if (logger === 'yes') { _%>
 const logger = require('./utils/logger');
-<% } %>
+<%_ } _%>
 const { connectToDb } = require('./db/client');
 const router = require('./routes');
-<% } %>
+<%_ } _%>
 
 const app = express();
 
 app.use(express.json());
 
 const port = process.env.PORT;
-let server <% if (language === 'typescript') { %>: Server | undefined <% } %>;
+let server<%_ if (language === 'typescript') { _%>: Server | undefined<%_ } _%>;
 
 <%
 const logInfo = logger === 'yes' ? 'logger.info' : 'console.log';
@@ -36,7 +36,7 @@ function setupRoutes() {
   app.use('/api/v1', router);
 }
 
-const startServer = async () <% if (language === 'typescript') { %>: Promise<void><% } %> => {
+const startServer = async ()<%_ if (language === 'typescript') { _%>: Promise<void><%_ } _%> => {
   setupRoutes();
   await connectToDb();
   server = app.listen(port, () => {
@@ -44,7 +44,7 @@ const startServer = async () <% if (language === 'typescript') { %>: Promise<voi
   });
 };
 
-function stopServer(signal <% if (language === 'typescript') { %>: string, code: number<% } %>) {
+function stopServer(signal<%_ if (language === 'typescript') { _%>: string, code: number<%_ } _%>) {
   <%= logInfo %>(`recieved ${signal} , stopping server gracefully`);
   if (server) {
     server.close(() => {
@@ -64,17 +64,17 @@ process.once('SIGTERM', () => {
   stopServer('SIGTERM', 0);
 });
 
-process.on('uncaughtException', (error <% if (language === 'typescript') { %>: unknown<% } %>) => {
+process.on('uncaughtException', (error<%_ if (language === 'typescript') { _%>: unknown<%_ } _%>) => {
   <%= logError %>({ error }, 'uncaught exception');
   stopServer('UNCAUGHT_EXCEPTION', 1);
 });
 
-process.on('unhandledRejection', (error <% if (language === 'typescript') { %>: unknown<% } %>) => {
+process.on('unhandledRejection', (error<%_ if (language === 'typescript') { _%>: unknown<%_ } _%>) => {
   <%= logError %>({ error }, 'unhandled rejection');
   stopServer('UNHANDLED_REJECTION', 1);
 });
 
-async function bootstrapApplication() <% if (language === 'typescript') { %>: Promise<void><% } %> {
+async function bootstrapApplication()<%_ if (language === 'typescript') { _%>: Promise<void><%_ } _%> {
   try {
     await startServer();
   } catch (error) {
@@ -94,8 +94,8 @@ if (process.env.NODE_ENV !== 'test') {
   bootstrapApplication();
 }
 
-<% if (type === 'esm') { %>
+<%_ if (type === 'esm') { _%>
 export { bootstrapApplication };
-<% } else { %>
+<%_ } else { _%>
 module.exports = { bootstrapApplication };
-<% } %>
+<%_ } _%>
