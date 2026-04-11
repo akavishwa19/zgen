@@ -19,7 +19,7 @@ services:
         target: '/usr/src/app'
         read_only: true
 
-  <% if (database === 'mysql') { %>
+<%_ if (database === 'mysql') { _%>
   db:
     image: mysql:latest
     restart: always
@@ -35,9 +35,9 @@ services:
       retries: 3
     ports:
       - 3306:3306
-  <% } %>
+<%_ } _%>
 
-  <% if (database === 'mongodb') { %>
+<%_ if (database === 'mongodb') { _%>
   db:
     image: mongo:latest
     restart: always
@@ -53,7 +53,7 @@ services:
       retries: 3
     ports:
       - 27017:27017
-  <% } %>
+<%_ } _%>
 
 volumes:
   db_data:
