@@ -1,18 +1,14 @@
 <%_ if (language === 'typescript') { _%>
-<%_ for (const [entity, fields] of Object.entries(schemas)) { 
-const typeName = entity.charAt(0).toUpperCase() + entity.slice(1);
-_%>
-export interface <%= typeName %>Payload {
+export interface <%= api.charAt(0).toUpperCase()+api.slice(1) %>Payload {
 <%_ for (const field of fields) { _%>
   <%= field.name %>: <%= field.type %>;
 <%_ } _%>
 }
 
-export interface <%= typeName %> extends <%= typeName %>Payload {
+export interface <%= api.charAt(0).toUpperCase()+api.slice(1) %> extends <%= api.charAt(0).toUpperCase()+api.slice(1) %>Payload {
   id: string;
   createdAt: string;
   updatedAt: string;
 }
 
-<%_ } _%>
 <%_ } _%>
