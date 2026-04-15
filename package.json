@@ -1,5 +1,5 @@
 {
-  "name": "aka-node-gen",
+  "name": "n-gen",
   "version": "0.0.0",
   "description": "node utility to build APIs at pace",
   "keywords": [
@@ -12,10 +12,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/akavishwa19/aka-node-gen"
+    "url": "https://github.com/akavishwa19/n-gen"
   },
   "bugs": {
-    "url": "https://github.com/akavishwa19/aka-node-gen/issues"
+    "url": "https://github.com/akavishwa19/n-gen/issues"
   },
   "author": "Akash Vishwakarma <akash19102001@gmail.com> (https://www.akashvishwakarma.com)",
   "license": "MIT",
