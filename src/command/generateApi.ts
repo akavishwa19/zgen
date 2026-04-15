@@ -1,6 +1,7 @@
 import { readConfig } from '../utils/config';
 import buildTemplate from '../utils/buildTemplate';
 import { buildPath, getCliRoot, getRoot } from '../utils/file';
+import { manageDeps } from './dependencyManager';
 
 //eslint-disable-next-line complexity
 async function generateApi() {
@@ -12,7 +13,7 @@ async function generateApi() {
   const cliRoot = getCliRoot();
   const appRoot = getRoot();
   const templateRoot = buildPath(cliRoot, 'src', 'templates');
-  const outputRoot = buildPath(appRoot, 'src');
+  const outputRoot = buildPath(appRoot, 'output');
 
   //index file
   buildTemplate(
@@ -156,6 +157,13 @@ async function generateApi() {
       );
     }
   }
+
+  //install deps based on config
+  await manageDeps({
+    language,
+    database,
+    logger
+  });
 }
 
 export default generateApi;
