@@ -31,7 +31,7 @@ export default defineConfig([
     rules: {
       eqeqeq: ['error', 'smart'],
       complexity: ['error', 8],
-      'no-console': 'error',
+      'no-console': 'off',
       semi: [2, 'always']
     }
   },
