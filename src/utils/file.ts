@@ -1,6 +1,5 @@
 import path from 'node:path';
 import fs from 'fs';
-import logger from './logger';
 
 function getRoot(): string {
   return process.cwd();
@@ -37,7 +36,7 @@ function readFile(filePath: string): string {
     const data = fs.readFileSync(filePath, 'utf-8');
     return data;
   } catch (error) {
-    logger.error(error, 'failed to read path at ' + filePath);
+    console.error(error, 'failed to read path at ' + filePath);
     throw error;
   }
 }
@@ -51,7 +50,7 @@ function writeFile(filePath: string, data: string): void {
   try {
     fs.writeFileSync(filePath, data, 'utf-8');
   } catch (error) {
-    logger.error(error, 'failed to write path at ' + filePath);
+    console.error(error, 'failed to write path at ' + filePath);
     throw error;
   }
 }
@@ -61,7 +60,7 @@ function readAsJson(filePath: string): object {
   try {
     return JSON.parse(rawstring);
   } catch (error) {
-    logger.error(error, 'failed to parse path at ' + filePath);
+    console.error(error, 'failed to parse path at ' + filePath);
     throw error;
   }
 }

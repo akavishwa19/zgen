@@ -1,6 +1,5 @@
 import { Config } from '../types/config';
 import { spawn } from 'node:child_process';
-import logger from '../utils/logger';
 
 async function manageDeps(options: Partial<Config>): Promise<void> {
   const { database, language, logger: loggerOption } = options;
@@ -32,9 +31,9 @@ async function installDeps(deps: string[], devDeps: string[]): Promise<void> {
     await installPackages(packageManager, devDeps, true);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      logger.error(error, error.message);
+      console.error(error, error.message);
     } else {
-      logger.error(error, 'failed to install dependencies');
+      console.error(error, 'failed to install dependencies');
     }
     throw error;
   }

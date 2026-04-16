@@ -1,6 +1,5 @@
 import { input, select } from '@inquirer/prompts';
 import ora from 'ora';
-import logger from '../utils/logger';
 import { saveConfig } from '../utils/config';
 import { Config, Fields } from '../types/config';
 import { ACCEPTABLE_SCHEMA_TYPES } from '../consts';
@@ -149,7 +148,7 @@ async function defineConfig(): Promise<Config> {
     spinner.succeed('Finished setting up app based on selected configuration');
     return config;
   } catch (error) {
-    logger.error(error, 'Config initialization failed');
+    console.error(error, 'Config initialization failed');
     throw error;
   }
 }
