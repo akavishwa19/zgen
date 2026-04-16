@@ -43,12 +43,12 @@ async function generateApi() {
   if (docker === 'yes') {
     buildTemplate(
       buildPath(templateRoot, 'docker', 'dockerfile.ejs'),
-      buildPath(outputRoot, 'containers', `Dockerfile`)
+      buildPath(outputRoot, '..', 'containers', `Dockerfile`)
     );
 
     buildTemplate(
       buildPath(templateRoot, 'docker', 'compose.ejs'),
-      buildPath(outputRoot, `compose.yaml`),
+      buildPath(outputRoot, '..', `compose.yaml`),
       {
         database
       }
