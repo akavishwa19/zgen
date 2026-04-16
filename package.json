@@ -20,7 +20,7 @@
   "author": "Akash Vishwakarma <akash19102001@gmail.com> (https://www.akashvishwakarma.com)",
   "license": "MIT",
   "type": "commonjs",
-  "main": "src/index.ts",
+  "main": "./dist/index.js",
   "bin": {
     "zgen": "./dist/index.js"
   },
