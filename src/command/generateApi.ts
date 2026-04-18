@@ -13,7 +13,7 @@ async function generateApi() {
   const cliRoot = getCliRoot();
   const appRoot = getRoot();
   const templateRoot = buildPath(cliRoot, 'src', 'templates');
-  const outputRoot = buildPath(appRoot, 'output');
+  const outputRoot = buildPath(appRoot, 'src');
 
   //index file
   buildTemplate(
